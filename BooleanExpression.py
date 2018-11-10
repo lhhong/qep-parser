@@ -1,6 +1,7 @@
 import Keywords
 import itertools
 import sympy
+import re
 
 class Variable():
 
@@ -47,7 +48,7 @@ class BooleanExpression():
         self.nr = 0
         self.variables = {}
         self.rev_variables = {}
-        self.var_gen = (chr(x) for x in intertools.count(start=97))
+        self.var_gen = (chr(x) for x in itertools.count(start=97))
 
         self.parse_string(string)
 
@@ -71,8 +72,8 @@ class BooleanExpression():
 
         args = [x.strip() for x in string.split(self.comparator)]
 
-        self.left = self.parse_operand(a[0])
-        self.right = self.parse_operand(a[1])
+        self.left = self.parse_operand(args[0])
+        self.right = self.parse_operand(args[1])
 
     def parse_operand(self, op):
         # Assumes string operands will not have other stuff
