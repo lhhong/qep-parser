@@ -28,14 +28,15 @@ class Relation(Variable):
 
 class Expression():
 
-    def __init__(self, exp, variables):
-        self.parse(exp, variables)
+    def __init__(self, exp, symbols):
+        self.parse(exp, symbols)
 
-    def parse(self, exp, variables):
+    def parse(self, exp, symbols):
+
         # Use sympy library to parse mathematical expression
-        for v in self.variables:
+        for v in symbols:
             exec(v + ' = sympy.Symbol("' + v + '")')
-        self.exp = eval('sympy.symplify(' + exp + ')')
+        self.exp = eval('sympy.simplify(' + exp + ')')
 
 
 
@@ -58,19 +59,22 @@ class BooleanExpression():
         strings = re.findall(r'\'[^\']*\'', string)
         for s in strings:
             a = next(self.var_gen)
-            variables[a] = StringVar(s)
-            rev_variables[s] = a
-            re.sub(re.escape(s), "'" + a + "'", string)
+            self.variables[a] = StringVar(s)
+            self.rev_variables[s] = a
+            string = re.sub(re.escape(s), "'" + a + "'", string)
 
         for c in Keywords.comparators:
             if c in string.lower():
+                splitter = c
                 if c == 'like':
                     c = '~~'
                 if c == 'not like':
                     c = '!~~'
                 self.comparator = c
+                # Needs to break to prevent multiple match
+                break
 
-        args = [x.strip() for x in string.split(self.comparator)]
+        args = [x.strip() for x in string.lower().split(splitter)]
 
         self.left = self.parse_operand(args[0])
         self.right = self.parse_operand(args[1])
@@ -79,7 +83,7 @@ class BooleanExpression():
         # Assumes string operands will not have other stuff
         if op.startswith("'") and op.endswith("'"):
             # String was replaced with variables
-            return variables[op[1:-1]]
+            return self.variables[op[1:-1]]
 
         # Finds table and column names in operand
         matches = re.findall(r'[a-zA-Z.]+', op)
@@ -90,7 +94,7 @@ class BooleanExpression():
                 a = next(self.var_gen)
                 self.variables[a] = Relation(m)
                 self.rev_variables[m] = a
-            re.replace(re.escape(m), a, op)
+            op = re.sub(re.escape(m), a, op)
 
         return Expression(op, self.variables)
 
