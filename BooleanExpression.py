@@ -48,17 +48,25 @@ class Expression():
 
 class BooleanExpression():
 
-    def __init__(self, string, start=0, end=0, rev_variables=None):
+    def __init__(self, string, start=0, end=0, variables=None, rev_variables=None):
         self.string = string
         self.start = start
         self.end = end
         self.nr = 0
-        self.variables = {}
+
+        start = 97
+
+        if variables:
+            self.variables = variables
+        else:
+            self.variables = {}
         if rev_variables:
             self.rev_variables = rev_variables
+            start = ord(max(rev_variables.values()))
         else:
             self.rev_variables = {}
-        self.var_gen = (chr(x) for x in itertools.count(start=97))
+
+        self.var_gen = (chr(x) for x in itertools.count(start=start))
 
         self.parse_string(string)
 
