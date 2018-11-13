@@ -16,6 +16,8 @@
     "*Costiest Node (by cost)": false,
     "*Slowest Node (by duration)": false,
     "*Percent Duration": null,
+    "StartOfQuery": 207,
+    "EndOfQuery": 232,
     "Node Type": "Aggregate",
     "Children": [
         {
@@ -34,6 +36,8 @@
             "*Costiest Node (by cost)": true,
             "*Slowest Node (by duration)": false,
             "*Percent Duration": null,
+            "StartOfQuery": 145,
+            "EndOfQuery": 175,
             "Node Type": "Hash Join",
             "Children": [
                 {
@@ -45,13 +49,15 @@
                     "Total Cost": 65.45,
                     "Plan Rows": 2996,
                     "Plan Width": 8,
-                    "Filter": "(quantityordered > 1)",
+                    "Filter": "(quantityordered > 4)",
                     "*Actual Cost": 65.45,
                     "*Actual Duration": 0,
                     "*Largest Node (by rows)": false,
                     "*Costiest Node (by cost)": false,
                     "*Slowest Node (by duration)": false,
                     "*Percent Duration": null,
+                    "StartOfQuery": 180,
+                    "EndOfQuery": 206,
                     "Node Type": "Seq Scan",
                     "Children": []
                 },
@@ -68,6 +74,8 @@
                     "*Costiest Node (by cost)": false,
                     "*Slowest Node (by duration)": false,
                     "*Percent Duration": null,
+                    "StartOfQuery": -1,
+                    "EndOfQuery": -1,
                     "Node Type": "Hash",
                     "Children": [
                         {
@@ -85,6 +93,8 @@
                             "*Costiest Node (by cost)": false,
                             "*Slowest Node (by duration)": false,
                             "*Percent Duration": null,
+                            "StartOfQuery": -1,
+                            "EndOfQuery": -1,
                             "Node Type": "Nested Loop",
                             "Children": [
                                 {
@@ -102,6 +112,8 @@
                                     "*Costiest Node (by cost)": false,
                                     "*Slowest Node (by duration)": false,
                                     "*Percent Duration": null,
+                                    "StartOfQuery": 60,
+                                    "EndOfQuery": 71,
                                     "Node Type": "Seq Scan",
                                     "Children": []
                                 },
@@ -123,6 +135,8 @@
                                     "*Costiest Node (by cost)": false,
                                     "*Slowest Node (by duration)": false,
                                     "*Percent Duration": null,
+                                    "StartOfQuery": 73,
+                                    "EndOfQuery": 81,
                                     "Node Type": "Index Scan",
                                     "Children": []
                                 }
