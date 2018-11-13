@@ -55,7 +55,7 @@ def findExpressions(sql):
         sTerm = backwardSearch.search(revSql, L - m.span()[0] + 1)
         if sTerm:
             start = L - sTerm.span()[0]
-        exps.append(BooleanExpression(sql[start:end], start, end))
+        exps.append(BooleanExpression(sql[start:end], start=start, end=end))
 
     return exps
 
