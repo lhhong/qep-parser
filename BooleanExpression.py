@@ -8,6 +8,12 @@ class Variable():
     def __init__(self, t):
         self.t = t
 
+class CountVar(Variable):
+
+    def __init__(self, rel):
+        self.rel = rel
+        super().__init__('Cnt')
+
 class StringVar(Variable):
 
     def __init__(self, val):
@@ -86,6 +92,17 @@ class BooleanExpression():
             return self.variables[op[1:-1]]
 
         # Finds table and column names in operand
+        matches = re.findall(r'count\(.+\)', op, flags=re.IGNORECASE)
+
+        for m in matches:
+            if m in self.rev_variables:
+                a = self.rev_variables[m]
+            else:
+                a = next(self.var_gen)
+                self.variables[a] = CountVar(m)
+                self.rev_variables[m] = a
+            op = re.sub(re.escape(m), a, op, flags=re.IGNORECASE)
+
         matches = re.findall(r'[a-zA-Z.]+', op)
         for m in matches:
             if m in self.rev_variables:
