@@ -1,5 +1,5 @@
 syntax = {'select', 'from', 'where', 'inner', 'outer', 'join', 'distinct',
-          'having', 'group by'}
+          'having', 'group by', 'on'}
 
 binary_op = {'or', 'and', 'not'}
 

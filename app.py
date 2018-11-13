@@ -14,7 +14,7 @@ def hello_world():
 @app.route("/plot_query_tree", methods=["POST"])
 def plot_query_tree():
     data = request.get_json()
-    stats, all_nodes = plotQueryTree(data["qep"])
+    stats, all_nodes, _ = plotQueryTree(data['query'], data["qep"])
     return jsonify(stats=stats, all_nodes=all_nodes)
 
 @app.route("/plot_query_tree_from_sql", methods=["POST"])
@@ -34,7 +34,9 @@ def plot_query_tree_from_sql():
     finally:
         cur.close()
 
-    print(result)
+    qep = result[0][0][0]
+    stats, all_nodes, _ = plotQueryTree(data['query'], qep)
+    return jsonify(stats=stats, all_nodes=all_nodes)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
