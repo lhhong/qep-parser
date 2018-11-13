@@ -8,6 +8,12 @@ class Variable():
     def __init__(self, t):
         self.t = t
 
+class CountVar(Variable):
+
+    def __init__(self, rel):
+        self.rel = rel
+        super().__init__('Cnt')
+
 class StringVar(Variable):
 
     def __init__(self, val):
@@ -42,14 +48,25 @@ class Expression():
 
 class BooleanExpression():
 
-    def __init__(self, string, start):
+    def __init__(self, string, start=0, end=0, variables=None, rev_variables=None):
         self.string = string
         self.start = start
-        self.end = start + len(string)
+        self.end = end
         self.nr = 0
-        self.variables = {}
-        self.rev_variables = {}
-        self.var_gen = (chr(x) for x in itertools.count(start=97))
+
+        start = 97
+
+        if variables:
+            self.variables = variables
+        else:
+            self.variables = {}
+        if rev_variables:
+            self.rev_variables = rev_variables
+            start = ord(max(rev_variables.values()))
+        else:
+            self.rev_variables = {}
+
+        self.var_gen = (chr(x) for x in itertools.count(start=start))
 
         self.parse_string(string)
 
@@ -86,6 +103,17 @@ class BooleanExpression():
             return self.variables[op[1:-1]]
 
         # Finds table and column names in operand
+        matches = re.findall(r'count\(.+\)', op, flags=re.IGNORECASE)
+
+        for m in matches:
+            if m in self.rev_variables:
+                a = self.rev_variables[m]
+            else:
+                a = next(self.var_gen)
+                self.variables[a] = CountVar(m)
+                self.rev_variables[m] = a
+            op = re.sub(re.escape(m), a, op, flags=re.IGNORECASE)
+
         matches = re.findall(r'[a-zA-Z.]+', op)
         for m in matches:
             if m in self.rev_variables:
