@@ -48,7 +48,7 @@ class Expression():
 
 class BooleanExpression():
 
-    def __init__(self, string, start, end, rev_variables=None):
+    def __init__(self, string, start=0, end=0, rev_variables=None):
         self.string = string
         self.start = start
         self.end = end
