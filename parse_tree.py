@@ -36,7 +36,11 @@ def plotQueryTree(qep):
         - qep: json object, may need to perform json.load
     Returns:
         - stats: json object
+<<<<<<< HEAD:parseTree.py
         - all_nodes: json object representing the annotated qep
+=======
+        - all_nodes: json object representing the annotated qep 
+>>>>>>> 68054135d7b7f6cde4ea60ed2771f57c9d63a09c:parse_tree.py
     """
     assert 'Plan' in qep[0], "Invalid JSON was given"
     root = parseJsonNode(qep[0]['Plan'])

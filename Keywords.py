@@ -1,9 +1,10 @@
-syntax = {'select', 'from', 'where', 'inner', 'outer', 'join', 'distinct'}
+syntax = {'select', 'from', 'where', 'inner', 'outer', 'join', 'distinct',
+          'having', 'group by'}
 
 binary_op = {'or', 'and', 'not'}
 
 # In array, not set as we need to check things like ~~ before ~ or <= before <
-comparators = ['like', 'not like', '<=', '<>', '>=', '<', '>', '=', '~~', '!~~', '~', '~*', '!~', '!~*']
+comparators = ['like', 'not like', '<=', '<>', '>=', '<', '>', '=', '!~~', '~~', '!~*', '~*', '!~', '~']
 
 ### These not needed as I am using sympy library
 
