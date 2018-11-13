@@ -42,10 +42,10 @@ class Expression():
 
 class BooleanExpression():
 
-    def __init__(self, string, start):
+    def __init__(self, string, start, end):
         self.string = string
         self.start = start
-        self.end = start + len(string)
+        self.end = end
         self.nr = 0
         self.variables = {}
         self.rev_variables = {}
