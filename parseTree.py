@@ -10,6 +10,25 @@ def parseJsonNode(json_node):
     description_dict = {k: v for k,v in json_node.items() if k not in ["Plans", "Node Type"]}
     return TreeNode(title, node_children, description_dict)
 
+
+def getTreeBFS(root):
+    # root is a TreeNode
+    all_nodes = [root]
+    frontier = [root]
+    i = 0
+    while frontier:
+        next_level = []
+        for u in frontier:
+            for v in u.children_text:
+                node = parseJsonNode(v)
+                u.addChild(node)
+                all_nodes.append(node)
+                next_level.append(node)
+        frontier = next_level
+        i += 1
+    return all_nodes
+
+
 def plotQueryTree(qep):
 	"""
 	Args:
