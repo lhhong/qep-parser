@@ -114,7 +114,7 @@ class BooleanExpression():
                 self.rev_variables[m] = a
             op = re.sub(re.escape(m), a, op, flags=re.IGNORECASE)
 
-        matches = re.findall(r'[a-zA-Z.]+', op)
+        matches = re.findall(r'[_a-zA-Z.]+', op)
         for m in matches:
             if m in self.rev_variables:
                 a = self.rev_variables[m]
