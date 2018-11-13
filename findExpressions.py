@@ -35,7 +35,7 @@ def findExpressions(sql):
         keyRevRe.append('|')
         keyRe.append('(^|\\s)' + re.escape(s) + '($|\\s)')
         keyRe.append('|')
-    keyRe.pop()
+    keyRe.append(';')
     keyRevRe.pop()
 
     forwardSearch = re.compile(''.join(keyRe), flags=re.IGNORECASE)

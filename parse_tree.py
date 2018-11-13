@@ -52,7 +52,7 @@ def plotQueryTree(query, qep):
     largest_duration = markSlowestNode(all_nodes)
     calculatePercentDuration(all_nodes, execution_time)
 
-    # Correlate query
+    # Correlate query, marking nodes with start and end index
     correlateQuery(all_nodes, query)
 
     stats = {'execution_time': execution_time,
