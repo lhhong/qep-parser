@@ -30,13 +30,13 @@ def getTreeBFS(root):
 
 
 def plotQueryTree(qep):
-	"""
-	Args:
-		- qep: json object, may need to perform json.load
-	Returns:
-		- stats: json object
-		- all_nodes: json object representing the annotated qep 
-	"""
+    """
+    Args:
+        - qep: json object, may need to perform json.load
+    Returns:
+        - stats: json object
+        - all_nodes: json object representing the annotated qep 
+    """
     assert 'Plan' in qep[0], "Invalid JSON was given"
     root = parseJsonNode(qep[0]['Plan'])
     all_nodes = getTreeBFS(root)
