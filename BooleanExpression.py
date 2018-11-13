@@ -48,13 +48,16 @@ class Expression():
 
 class BooleanExpression():
 
-    def __init__(self, string, start, end):
+    def __init__(self, string, start, end, rev_variables=None):
         self.string = string
         self.start = start
         self.end = end
         self.nr = 0
         self.variables = {}
-        self.rev_variables = {}
+        if rev_variables:
+            self.rev_variables = rev_variables
+        else:
+            self.rev_variables = {}
         self.var_gen = (chr(x) for x in itertools.count(start=97))
 
         self.parse_string(string)
