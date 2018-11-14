@@ -46,6 +46,13 @@ def getMatchingClause(query, search_key):
     return search_key + ' ' + parts[0]
 
 
+def findClauseStartEnd(query, clause):
+    start = query.find(clause)
+    if start == -1:
+        return -1, -1, ""
+    return start, start + len(clause), clause
+    
+
 def correlateQuery(all_nodes, query):
     
     # Change query to a list of Boolean expressions
