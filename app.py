@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from parse_tree import *
 from flask_cors import CORS
+import psycopg2
 
 app = Flask(__name__)
 CORS(app)
@@ -32,9 +33,12 @@ def plot_query_tree_from_sql():
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
-        cur.close()
+        if cur:
+            cur.close()
 
-    qep = result[0][0][0]
+    qep = result[0][0]
+    print(qep)
+    print(dir(qep))
     stats, all_nodes, _ = plotQueryTree(data['query'], qep)
     return jsonify(stats=stats, all_nodes=all_nodes)
 
