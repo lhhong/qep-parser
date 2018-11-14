@@ -3,8 +3,10 @@ from BooleanExpression import BooleanExpression
 
 
 def stripParenthesis(foo):
-    if foo[0]=='(' and foo[-1]==')':
-        return foo[1:-1]
+    foo = foo.replace("(", '')
+    foo = foo.replace(")", '')
+    foo = foo.replace('::text', '')
+    return foo
 
 
 def findMatchingBE(query, booleans, cond):

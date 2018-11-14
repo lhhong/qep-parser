@@ -16,8 +16,8 @@
     "*Costiest Node (by cost)": false,
     "*Slowest Node (by duration)": false,
     "*Percent Duration": null,
-    "StartOfQuery": 207,
-    "EndOfQuery": 232,
+    "StartOfQuery": 203,
+    "EndOfQuery": 228,
     "Node Type": "Aggregate",
     "Children": [
         {
@@ -49,7 +49,7 @@
                     "Total Cost": 65.45,
                     "Plan Rows": 2996,
                     "Plan Width": 8,
-                    "Filter": "(quantityordered > 4)",
+                    "Filter": "(quantityordered > 1)",
                     "*Actual Cost": 65.45,
                     "*Actual Duration": 0,
                     "*Largest Node (by rows)": false,
@@ -57,7 +57,7 @@
                     "*Slowest Node (by duration)": false,
                     "*Percent Duration": null,
                     "StartOfQuery": 180,
-                    "EndOfQuery": 206,
+                    "EndOfQuery": 202,
                     "Node Type": "Seq Scan",
                     "Children": []
                 },
