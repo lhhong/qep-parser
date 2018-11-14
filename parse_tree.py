@@ -63,4 +63,4 @@ def plotQueryTree(query, qep):
 
     query = {'query': query}
 
-    return json.dump(stats), json.dump(all_nodes[0].to_json()), json.dump(query)
+    return json.dumps(stats), json.dumps(all_nodes[0].to_json()), json.dumps(query)
