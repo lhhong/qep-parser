@@ -26,7 +26,10 @@ def reverseComparatorIfNeeded(comparator):
 
 
 def isEquivalentBooleanExpression(a,b):
-    if a.left.exp==b.left.exp and a.right.exp==b.right.exp:
+    if not hasattr(a.right, 'exp'):
+        if hasattr(a.right, 'val') and hasattr(b.right, 'val'):
+            return a.left.exp==b.left.exp and a.right.val==b.right.val
+    elif a.left.exp==b.left.exp and a.right.exp==b.right.exp:
         return a.comparator==b.comparator
     elif a.left.exp==b.right.exp and a.right.exp==b.left.exp:
         return a.comparator==reverseComparatorIfNeeded(b.comparator)
@@ -43,15 +46,10 @@ def getMatchingClause(query, search_key):
     return search_key + ' ' + parts[0]
 
 
-def findClauseStartEnd(query, clause):
-    start = query.find(clause)
-    if start == -1:
-        return -1, -1, ""
-    return start, start + len(clause), clause
-
-
 def correlateQuery(all_nodes, query):
+    
     # Change query to a list of Boolean expressions
+    query = query.lower()
     booleans = findExpressions(query)
     
     for node in all_nodes:
@@ -67,7 +65,7 @@ def correlateQuery(all_nodes, query):
         elif 'Scan' in node.title:
             # Find relation name
             clause = " ".join([node.description_dict['Relation Name'], node.description_dict['Alias']])
-            s, e, match = findClauseStartEnd(query, clause)
+            s, e, match = findClauseStartEnd(query, clause.lower())
             #print('Scan:', clause, 'Matched: ', match)
             if 'Filter' in node.description_dict:
                 # Find filter condition as boolean expression
@@ -77,15 +75,19 @@ def correlateQuery(all_nodes, query):
                 
         elif 'Aggregate' in node.title:
             # Find GROUP BY
-            clause = getMatchingClause(query, 'GROUP BY')
+            clause = getMatchingClause(query, 'group by')
             s, e, match = findClauseStartEnd(query, clause)
             #print('Aggregate:', 'Matched: ', match)
         
         elif 'Sort' in node.title:
-            clause = getMatchingClause(query, 'ORDER BY')
+            clause = getMatchingClause(query, 'order by')
             s, e, match = findClauseStartEnd(query, clause)
             #print('Sort:', 'Matched: ', match)
+        
+        elif 'Limit' in node.title:
+            clause = getMatchingClause(query, 'limit')
+            s, e, match = findClauseStartEnd(query, clause)
+            #print('Limit:', 'Matched: ', match)
             
         node.description_dict['StartOfQuery'] = s
         node.description_dict['EndOfQuery'] = e
-        
