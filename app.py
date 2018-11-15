@@ -37,8 +37,6 @@ def plot_query_tree_from_sql():
             cur.close()
 
     qep = result[0][0]
-    print(qep)
-    print(dir(qep))
     stats, all_nodes, _ = plotQueryTree(data['query'], qep)
     return jsonify(stats=stats, all_nodes=all_nodes)
 
